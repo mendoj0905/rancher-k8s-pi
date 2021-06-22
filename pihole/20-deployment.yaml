@@ -13,8 +13,10 @@ spec:
     - ReadWriteMany
   nfs:
     path: /srv/k8s
-    server: 192.168.1.219
+    server: 192.168.1.223
+
 ---
+
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -27,7 +29,9 @@ spec:
   resources:
     requests:
       storage: 2Gi
+
 ---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -50,7 +54,7 @@ spec:
         - name: DNS2
           value: 8.8.4.4
         - name: TZ
-          value: America/NewYork
+          value: America/New York
         image: pihole/pihole:latest
         imagePullPolicy: Always
         name: pihole
@@ -73,12 +77,22 @@ spec:
           name: pihole-data
         - mountPath: /etc/dnsmasq.d
           name: pihole-data
-      dnsConfig:
-        nameservers:
-        - 127.0.0.1
-        - 8.8.8.8
       volumes:
       - name: pihole-data
         persistentVolumeClaim:
           claimName: pihole-data
         
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: pihole
+  labels:
+    app: pihole
+spec:
+  ports:
+  - port: 8001
+    protocol: TCP
+  selector:
+    app: pihole

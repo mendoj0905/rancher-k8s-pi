@@ -6,7 +6,7 @@ metadata:
   namespace: mariadb
 type: Opaque
 data:
-  ROOT_PASSWORD: TDBnIXRlY2g=
+  ROOT_PASSWORD: password
 ---  
 apiVersion: v1
 kind: PersistentVolume
@@ -23,7 +23,7 @@ spec:
     - ReadWriteMany
   nfs:
     path: /srv/k8s
-    server: 192.168.1.219
+    server: 192.168.1.223
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
