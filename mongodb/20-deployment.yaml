@@ -33,7 +33,7 @@ spec:
     - ReadWriteMany
   nfs:
     path: /srv/k8s
-    server: 192.168.1.223
+    server: 192.168.1.230
 
 ---
 
@@ -53,14 +53,13 @@ spec:
 ---
 
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   labels:
     app: mongo
   name: mongo
   namespace: mongodb
 spec:
-  serviceName: mongo
   replicas: 1
   selector:
     matchLabels:
